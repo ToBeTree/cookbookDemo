@@ -1,6 +1,6 @@
 from collections import deque
 
-
+# 使用collections中deque模块构建一个保存n次记录的队列
 def search(lines, pattern, history=5):
     previous_lines = deque(maxlen=history)
     for li in lines:

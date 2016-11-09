@@ -15,3 +15,11 @@ import json
 
 a = json.dumps(d)
 print(a)
+
+dd = dict()
+dd['food'] = 1
+# d['food'] = 2
+dd['apple'] = 2
+dd['stupid'] = 3
+for key in dd:
+    print(key, dd[key])
