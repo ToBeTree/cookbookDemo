@@ -21,6 +21,7 @@ stock_prototype = Stock('', 0, 0.0, None, None)
 
 
 def dict_to_stock(s):
+    # return new nametuple
     return stock_prototype._replace(**s)
 a = {'name': 'ACME', 'shares': 100, 'price': 123.45}
 print(dict_to_stock(a))
