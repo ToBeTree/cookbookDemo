@@ -9,3 +9,6 @@ print([name for name in names if fnmatch(name, 'Dat[0-9].csv')])
 
 print(fnmatch('re.txt', '*.TXT'))
 print(fnmatchcase('re.txt', '*.TXT'))
+
+from collections import deque
+# deque
