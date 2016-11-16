@@ -53,3 +53,22 @@ from operator import attrgetter
 # class s():
 #     pass
 # sorted(S, key=attrgetter(''))
+# 1-15 通过某个字段将记录分组
+from itertools import groupby
+dic = [{'name': 1}, {'name': 2}, {'name': 2}, ]
+groupby(dic, key=lambda s: s['name'])
+# 1-16 过滤序列元素
+mylist = [1, 2, 4, -1, 4, -5, 1, 5]
+(n for n in mylist if n < 0)
+# 1-17 从字典中提取子集
+mylist_1 = {n for n in mylist if n > 0}
+# 1-18 映射名称到序列元素
+from collections import namedtuple
+Stock = namedtuple('stock', ('name', 'age'))
+stock = Stock('peter', 18)
+# 1-19 转换并同时计算数据
+mylist_1 = sum(n * n for n in mylist if n > 0)
+# 1-20 合并多个字典或映射
+from collections import ChainMap
+dic_2 = {'a': 4}
+dic_c = ChainMap(dic_1, dic_2)
