@@ -17,9 +17,9 @@ from PIL import Image
 import os
 # print(os.listdir('E:\\金馆长版本贴吧泡泡表情'))
 i = 0
-for im_name in os.listdir('E:\\金馆长版本贴吧泡泡表情'):
-
-    im = Image.open('E:\\金馆长版本贴吧泡泡表情\\' + im_name)
+for im_name in os.listdir('C:\\Users\\wuyongqiang\\Desktop\\泡泡表情包\\扁平化贴吧泡泡表情'):
+# C:\Users\wuyongqiang\Desktop\泡泡表情包\扁平化贴吧泡泡表情
+    im = Image.open('C:\\Users\\wuyongqiang\\Desktop\\泡泡表情包\\扁平化贴吧泡泡表情\\' + im_name)
     print(im.format, im.size, im.mode)
     # 'a'.join(str(im.format))
     # print(im_name.split('.')[0] + '.' + (str(im.format)))
