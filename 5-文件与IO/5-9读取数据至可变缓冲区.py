@@ -7,3 +7,5 @@ bytearray分配内存空间
 import os.path
 from itertools import chain
 bytearray()
+a = [{'a': 1, 'b': 3}]
+print(a[0]['a'])

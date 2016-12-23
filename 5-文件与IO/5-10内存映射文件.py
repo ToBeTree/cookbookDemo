@@ -19,7 +19,7 @@ with open('data', 'wb') as f:
 
 m = memory_map('data')
 print(len(m))
-m.close()
+# m.close()
 m[0:11] = b'Hello world'
 with open('data', 'rb') as f:
     print(f.read(11))

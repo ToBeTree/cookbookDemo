@@ -12,3 +12,8 @@ print(fnmatchcase('re.txt', '*.TXT'))
 
 from collections import deque
 # deque
+import optparse
+parse = optparse.OptionParser()
+parse.add_option()
+parse.add_options()
+
