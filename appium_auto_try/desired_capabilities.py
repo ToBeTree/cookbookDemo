@@ -10,6 +10,7 @@ print(11)
 
 def get_desired_capabilities(app):
     desired_caps = {
+        'fullReset': 'true',
         'platformName': 'Android',
         'platformVersion': '6.1',
         'deviceName': 'Android',

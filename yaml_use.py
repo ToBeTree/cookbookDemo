@@ -46,3 +46,8 @@ p1.stdout.close()
 output, error = p2.communicate()
 print(output)
 print(error)
+import os
+print(os.popen('echo hello').read())
+o = os.popen('adb -s ff31b441 shell pm list packages | findstr meixin')
+print(o.read())
+print(os.popen('adb devices'))
