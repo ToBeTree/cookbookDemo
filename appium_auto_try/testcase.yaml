@@ -1,12 +1,26 @@
 ---
 -
+  test_inherit:
+    - device.yaml
+    - device1.yaml
+    - device2.yaml
+    - testcase.yaml
+-
+  test_inherit: haha
+-
   test_name: 输入帐号名
   test_id: 0002
   test_control_type: id
   test_action: send_keys
   test_control: test.joko.com.myapplication:id/editText
   test_text: 199999999
-
+-
+  test_name: 输入帐号名
+  test_id: 0003
+  test_control_type: id
+  test_action: send_keys
+  test_control: test.joko.com.myapplication:id/editText
+  test_text: 199999999
 -
   food:
     - aaa

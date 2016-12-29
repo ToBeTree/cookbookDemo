@@ -13,12 +13,17 @@ class StartAppium:
         print(command)
         self.appium = subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        self.appium.wait()
+        print(self.appium.pid)
+        # self.appium.wait()
         # while True:
         #     print(self.appium.stdout.readline().decode('utf-8'))
         # print(self.appium.stdout.read().decode('utf-8'))
 
     def stop_appium(self):
+        # find pid by listener port
+        # netstat -ano | findstr port
+        # TCP 0.0.0.0:7065 0.0.0.0:0 LISTENING 3732
+        # self.appium.pid
         return self.appium.poll()
 
     def start(self):
