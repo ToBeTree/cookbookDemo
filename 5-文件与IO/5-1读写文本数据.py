@@ -3,3 +3,5 @@
 rt文本模式读取
 rb二进制模式读取
 """
+data = input('input')
+print(data)
