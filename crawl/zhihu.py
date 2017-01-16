@@ -2,6 +2,9 @@ import requests
 import re
 from bs4 import BeautifulSoup
 from lxml import html
+from html import unescape
+# t = unescape('&gt;')
+# print(t)
 # from html.parser import HTMLParser
 # this module is solve InsecureRequestWarning
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -47,17 +50,26 @@ class crawler():
             print('success')
             # t = html.html_parser(r.text)
             tree = html.fromstring(r.text)
-            print(tree.xpath("//h2[@class='ContentItem-title']//a[@class='UserLink-link']/@href"))
+            # print(tree.xpath(
+            #     "//h2[@class='ContentItem-title']//a[@class='UserLink-link']/@href"))
             # print(tree.xpath("//span[@class='location item']/@title"))
             # print(r.text)
             # html_parser = HTMLParser.HTMLParser()
             # txt = HTMLParser.unescape(r.content)
-            # self.analysis_profile(r.text)
+            self.analysis_profile(r.text)
             return True
 
     def analysis_profile(self, data):
-
+        """
+        这里知乎做了限制，通过这里东西访问的东西只有前三个
+        """
+        # data = unescape(data)
+        # print(data)
+        # BeautifulSoup.prettify(data)
         soup = BeautifulSoup(data, 'html.parser')
+        # print(soup.prettify())
+        print(data)
+        # print(data)
         name_list = soup.find_all(attrs={'class': 'ContentItem-title'})
         # name_list = soup.select('.UserLink-link')
         print(len(name_list))
