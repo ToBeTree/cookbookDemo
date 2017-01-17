@@ -51,7 +51,7 @@ class crawler:
         if r.status_code != 200:
             print('Network Error')
             return False
-        return r.content.decode('utf-8')
+        return r.content.decode('utf-8','ignore')
 
     def analysis_code(self, code='Not Data'):
         # code = self.get_page_code(page_index)
