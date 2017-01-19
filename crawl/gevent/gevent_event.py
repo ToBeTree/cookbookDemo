@@ -71,10 +71,10 @@
 
 import gevent
 from gevent.pool import Pool
-pool = Pool(2)
+pool = Pool(3)
 
 
 def hello_from(n):
     # print(n)
     print('size of %s' % len(pool))
-pool.map(hello_from, range(0, 3))
+pool.map(hello_from, range(0, 5))
