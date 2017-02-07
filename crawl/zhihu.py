@@ -48,6 +48,7 @@ class crawler():
             return False
         if r.status_code == 200:
             print('success')
+            print(r.encoding)
             # t = html.html_parser(r.text)
             tree = html.fromstring(r.text)
             # print(tree.xpath(
@@ -56,19 +57,23 @@ class crawler():
             # print(r.text)
             # html_parser = HTMLParser.HTMLParser()
             # txt = HTMLParser.unescape(r.content)
-            self.analysis_profile(r.text)
+            with open('a.html', 'wb') as f:
+                for c in r.iter_content(1024):
+                    f.write(c)
+            self.analysis_profile(r.content.decode('utf-8'))
             return True
 
     def analysis_profile(self, data):
         """
         这里知乎做了限制，通过这里东西访问的东西只有前三个
+        用ajax请求的，但是ajax不返回数据数据在原来的网页里面
         """
         # data = unescape(data)
         # print(data)
         # BeautifulSoup.prettify(data)
         soup = BeautifulSoup(data, 'html.parser')
         # print(soup.prettify())
-        print(data)
+        # print(data)
         # print(data)
         name_list = soup.find_all(attrs={'class': 'ContentItem-title'})
         # name_list = soup.select('.UserLink-link')
@@ -77,5 +82,10 @@ class crawler():
             print(name.find('a')['href'])
 
 if __name__ == '__main__':
+    # 这个是ajax请求的网址，关注的人
+    # https://zhihu-web-analytics.zhihu.com/api/v1/logs/batch
     c = crawler()
-    c.send_requests('https://www.zhihu.com/people/gaoming623/following')
+    # c.send_requests('https://www.zhihu.com/people/gaoming623/following')
+    c.send_requests(
+        'https://www.zhihu.com/people/meng-ge-2-58/following?page=2')
+    # c.send_requests('https://www.zhihu.com/api/v4/members/meng-ge-2-58/relations/mutuals?include=data%5B*%5D.answer_count%2Carticles_count%2Cfollower_count%2Cis_followed%2Cis_following%2Cbadge%5B%3F(type%3Dbest_answerer)%5D.topics&offset=0&limit=10')

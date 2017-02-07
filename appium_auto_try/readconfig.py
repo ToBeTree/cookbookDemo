@@ -28,3 +28,4 @@ if __name__ == '__main__':
     print(cp.get_ini('test_package_name', 'package_name'))
     print(cp.get_options('test_package_name'))
     print(cp.set_ini('test_package_name','test_activity','com.example'))
+    # print(cp.add_ini('haha'))
