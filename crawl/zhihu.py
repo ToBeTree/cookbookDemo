@@ -10,6 +10,9 @@ from html import unescape
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+"""
+等着，等我以后来清除你的混淆，靠。
+"""
 
 class crawler():
     def __init__(self):
@@ -32,12 +35,15 @@ class crawler():
                         'z_c0': 'Mi4wQUJCTV9vX2VmQWdBa0FKQjM2N3FDaGNBQUFCaEFsVk5WX2VqV0FCOUkxd21SdVJEVkVXU1hmRFY5bTZ6VVFVemV3|1484549220|38d793ff4a376c4cd95a2a629647042d0e176a4c'
                         }
         self.headers = {}
+        self.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+        self.headers['Accept-Encoding']='gzip, deflate, sdch, br'
+        self.headers['Accept-Language']='zh-CN,zh;q=0.8'
         self.headers[
             'Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
         self.headers[
             'User-Agent'] = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'
         self.headers['Host'] = 'www.zhihu.com'
-        self.headers['Referer'] = 'www.zhihu.com'
+        # self.headers['Referer'] = 'www.zhihu.com'
 
     def send_requests(self, url):
         try:
@@ -51,6 +57,8 @@ class crawler():
             print(r.encoding)
             # t = html.html_parser(r.text)
             tree = html.fromstring(r.text)
+            print(tree.xpath(
+                '//*[@id="Profile-following"]/div[2]/div[6]'))
             # print(tree.xpath(
             #     "//h2[@class='ContentItem-title']//a[@class='UserLink-link']/@href"))
             # print(tree.xpath("//span[@class='location item']/@title"))
@@ -79,13 +87,20 @@ class crawler():
         # name_list = soup.select('.UserLink-link')
         print(len(name_list))
         for name in name_list:
+            print(name.text)
             print(name.find('a')['href'])
 
 if __name__ == '__main__':
     # 这个是ajax请求的网址，关注的人
     # https://zhihu-web-analytics.zhihu.com/api/v1/logs/batch
     c = crawler()
+<<<<<<< HEAD
     # c.send_requests('https://www.zhihu.com/people/gaoming623/following')
     c.send_requests(
         'https://www.zhihu.com/people/meng-ge-2-58/following?page=2')
     # c.send_requests('https://www.zhihu.com/api/v4/members/meng-ge-2-58/relations/mutuals?include=data%5B*%5D.answer_count%2Carticles_count%2Cfollower_count%2Cis_followed%2Cis_following%2Cbadge%5B%3F(type%3Dbest_answerer)%5D.topics&offset=0&limit=10')
+=======
+    c.send_requests('https://www.zhihu.com/people/gaoming623/following')
+    # soup = BeatifulSoup(s)
+    # print(soup.prettify())
+>>>>>>> c9569a977897c727df84f30703a039466d2ef508
