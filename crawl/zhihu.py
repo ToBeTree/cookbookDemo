@@ -14,7 +14,9 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 等着，等我以后来清除你的混淆，靠。
 """
 
+
 class crawler():
+
     def __init__(self):
                 # self.host = 'https://www.zhihu.com'
         self.cookies = {'d_c0': '"AJACQd-u6gqPTjLVHnl-SOY6xBAgrm_zuAk=|1480328007"',
@@ -35,9 +37,10 @@ class crawler():
                         'z_c0': 'Mi4wQUJCTV9vX2VmQWdBa0FKQjM2N3FDaGNBQUFCaEFsVk5WX2VqV0FCOUkxd21SdVJEVkVXU1hmRFY5bTZ6VVFVemV3|1484549220|38d793ff4a376c4cd95a2a629647042d0e176a4c'
                         }
         self.headers = {}
-        self.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-        self.headers['Accept-Encoding']='gzip, deflate, sdch, br'
-        self.headers['Accept-Language']='zh-CN,zh;q=0.8'
+        self.headers[
+            'Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+        self.headers['Accept-Encoding'] = 'gzip, deflate, sdch, br'
+        self.headers['Accept-Language'] = 'zh-CN,zh;q=0.8'
         self.headers[
             'Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
         self.headers[
@@ -54,7 +57,6 @@ class crawler():
             return False
         if r.status_code == 200:
             print('success')
-            print(r.encoding)
             # t = html.html_parser(r.text)
             tree = html.fromstring(r.text)
             print(tree.xpath(
@@ -65,42 +67,30 @@ class crawler():
             # print(r.text)
             # html_parser = HTMLParser.HTMLParser()
             # txt = HTMLParser.unescape(r.content)
-            with open('a.html', 'wb') as f:
-                for c in r.iter_content(1024):
-                    f.write(c)
-            self.analysis_profile(r.content.decode('utf-8'))
+            self.analysis_profile(r.text)
             return True
 
     def analysis_profile(self, data):
         """
         这里知乎做了限制，通过这里东西访问的东西只有前三个
-        用ajax请求的，但是ajax不返回数据数据在原来的网页里面
         """
         # data = unescape(data)
         # print(data)
         # BeautifulSoup.prettify(data)
         soup = BeautifulSoup(data, 'html.parser')
+        # soup=soup.decode('gbk')
         # print(soup.prettify())
         # print(data)
         # print(data)
-        name_list = soup.find_all(attrs={'class': 'ContentItem-title'})
-        # name_list = soup.select('.UserLink-link')
+        # name_list = soup.find_all(attrs={'class': 'ContentItem-title'})
+        name_list = soup.select('.UserLink-link')
         print(len(name_list))
         for name in name_list:
             print(name.text)
-            print(name.find('a')['href'])
+            # print(name.find('a')['href'])
 
 if __name__ == '__main__':
-    # 这个是ajax请求的网址，关注的人
-    # https://zhihu-web-analytics.zhihu.com/api/v1/logs/batch
     c = crawler()
-<<<<<<< HEAD
-    # c.send_requests('https://www.zhihu.com/people/gaoming623/following')
-    c.send_requests(
-        'https://www.zhihu.com/people/meng-ge-2-58/following?page=2')
-    # c.send_requests('https://www.zhihu.com/api/v4/members/meng-ge-2-58/relations/mutuals?include=data%5B*%5D.answer_count%2Carticles_count%2Cfollower_count%2Cis_followed%2Cis_following%2Cbadge%5B%3F(type%3Dbest_answerer)%5D.topics&offset=0&limit=10')
-=======
     c.send_requests('https://www.zhihu.com/people/gaoming623/following')
     # soup = BeatifulSoup(s)
     # print(soup.prettify())
->>>>>>> c9569a977897c727df84f30703a039466d2ef508
