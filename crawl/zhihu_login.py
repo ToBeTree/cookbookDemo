@@ -12,7 +12,8 @@ import time
 # captcha:p6rm
 # email:wyqexpect@163.com
 
-
+# https://github.com/yuezhongxincpp/Zhihu-crawler/blob/master/%24%E4%B8%AA%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%8F%8A%E6%89%A9%E5%B1%95.py
+# 看看这个网址，perfect
 # 要考虑到cookie的问题，用session来做处理
 # cur_session = requests.session
 
@@ -22,7 +23,7 @@ class login:
     def __init__(self):
         self.xsrf = ''
         self.login_url = 'https://www.zhihu.com/#signin'
-        self.email_url = 'https://www.zhihu.com/login/email'
+
         self.cookies = ''
         self.headers = {}
         self.headers[
@@ -47,27 +48,30 @@ class login:
         self.xsrf = BeautifulSoup(r.content, 'html.parser').find(
             type='hidden').get('value')
         print(self.xsrf)
+        formdata = {
+            '_xsrf': self.xsrf,
+            'email': 'wyqexpect@163.com',
+            'password': 'wyqzhihu',
+            'captcha': self.get_captcha(login_session, self.headers)
+            # 'remember_me': 'true'
+        }
         if '@' in username:
             # return
-            formdata = {
-                '_xsrf': self.xsrf,
-                'email': 'wyqexpect@163.com',
-                'password': 'wyqzhihu',
-                'captcha': self.get_captcha(login_session, self.headers)
-                # 'remember_me': 'true'
-            }
-            r = login_session.post(self.email_url, data=formdata,
+            email_url = 'https://www.zhihu.com/login/email'
+            r = login_session.post(email_url, data=formdata,
                                    headers=self.headers)
-            if r.status_code == 200:
-                print('login success')
-            else:
-                print('login error')
         else:
-            print('num')
+            num_url = 'https://www.zhihu.com/login/phone'
+            r = login_session.post(
+                num_url, data=formdata, headers=self.headers)
+        if r.status_code == 200:
+            print('login success')
+        else:
+            print('login error')
 if __name__ == '__main__':
-    # login().login('111@qq.com', 11)
+    login().login('111@qq.com', 11)
     # 已经可以登录成功了，需要切换build系统
-    pass
+    # pass
     # PIL会占用资源，其实是已经输入了的
     # im = Image.open('captcha.gif')
     # im.show()
