@@ -74,7 +74,12 @@ class login:
         else:
             print('login error')
 if __name__ == '__main__':
-    login().login('111@qq.com', 11)
+    # login().login('111@qq.com', 11)
+    s = u'aaa\xa0bbssdsd'
+    # a = s.decode('utf-8').encode('gbk', 'ignore').decode('gbk')
+    # a = s.decode('gbk', 'ignore').encode('utf-8')
+    # a = s.encode('gbk','replace').decode('utf-8')
+    print(s)
     # 已经可以登录成功了，需要切换build系统
     # pass
     # PIL会占用资源，其实是已经输入了的
