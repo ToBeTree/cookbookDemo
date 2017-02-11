@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 import time
+import json
 
 #<input type="hidden" name="_xsrf" value="2cdc3f248d3edb22438e0f57bfc786ab"/>
 # 第一次的时候就不用输入验证码，尽量避免输入验证码
@@ -70,16 +71,88 @@ class login:
                 num_url, data=formdata, headers=self.headers)
         if r.status_code == 200:
             print('login success')
-            print(login_session.cookies.get_dict())
+            # print(login_session.cookies.get_dict())
+            return login_session.cookies.get_dict()
         else:
             print('login error')
+
+
+class crawler:
+    def __init__(self, cookies):
+        self.cookies = cookies
+        self.profile = []
+
+    def get_response(self, url):
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+            'Host': 'www.zhihu.com'
+        }
+        r = requests.get(url, cookies=self.cookies, headers=headers)
+        if r.status_code == 200:
+            return r.content.decode('utf-8', 'ignore')
+        else:
+            print('访问%s错误：%s' % (url, r.status_code))
+            return
+
+    def get_info(self, content):
+        soup = BeautifulSoup(content, 'html.parser')
+        profile = []
+        name = soup.find(
+            'span', attrs={'class': 'ProfileHeader-name'}).get_text()
+        tabs = soup.find_all('li', attrs={'class': 'Tabs-item'})
+
+        profile.append(name)
+        # 回答
+        profile.append(tabs[1].get_text())
+        # 分享
+        profile.append(tabs[2].get_text())
+        # 提问
+        profile.append(tabs[3].get_text())
+        # 收藏
+        profile.append(tabs[4].get_text())
+
+        return profile
+
+    def get_follow(self, start_url):
+        id = start_url.split('/')[-1]
+        # followees是他关注的人 followers是关注他的人
+        follow_url = r'https://www.zhihu.com/api/v4/members/' + \
+            str(id) + r'/followees?include=data%5B%2A%5D.answer_count%2Carticles_count%2Cgender%2Cfollower_count%2Cis_followed%2Cis_following%2Cbadge%5B%3F%28type%3Dbest_answerer%29%5D.topics&limit=20&offset=0'
+        data = json.loads(self.get_response(follow_url))
+        urls = []
+        # urls.append(start_url)
+        followers = []
+        # print(data.encode('gbk','ignore'))
+        print('start get followers people...')
+        while not data['paging']['is_end']:
+            # urls.append(data['paging']['next'])
+            for d in data['data']:
+                follower = []
+                # print(d['name'])
+                follower.append(d['name'])
+                follower.append(d['follower_count'])
+                follower.append(d['url_token'])
+                followers.append(follower)
+            data = json.loads(self.get_response(data['paging']['next']))
+        print('end get followers people...')
+        print('total followee people %s' len(followees))
+        return followers
 if __name__ == '__main__':
-    # login().login('111@qq.com', 11)
-    s = u'aaa\xa0bbssdsd'
+    # url = 'https://www.zhihu.com/people/'+str(id)
+    cookie = login().login('111@qq.com', 11)
+    print(cookie)
+    zhihu = crawler(cookie)
+    fs = zhihu.get_follow('https://www.zhihu.com/people/xlzd')
+    for f in fs:
+        print(f)
+    # r = zhihu.get_response('https://www.zhihu.com/people/xlzd')
+    # pro = zhihu.get_info(r)
+    # print(pro)
+    # s = 'aaa\xa0bbssdsd'
     # a = s.decode('utf-8').encode('gbk', 'ignore').decode('gbk')
     # a = s.decode('gbk', 'ignore').encode('utf-8')
     # a = s.encode('gbk','replace').decode('utf-8')
-    print(s)
+    # print(s)
     # 已经可以登录成功了，需要切换build系统
     # pass
     # PIL会占用资源，其实是已经输入了的
