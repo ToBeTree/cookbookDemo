@@ -134,7 +134,7 @@ class crawler:
                 follower.append(d['url_token'])
                 followers.append(follower)
             data = json.loads(self.get_response(data['paging']['next']))
-        print('end get followers people...')
+        print('end get followers people')
         print('total followee people %s' len(followees))
         return followers
 if __name__ == '__main__':
