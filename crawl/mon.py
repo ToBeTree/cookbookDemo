@@ -29,7 +29,7 @@ post = db.posts
 # print(id_1)
 
 # a = post.find({'_id': ObjectId("58a2d85c74cf3028dc45e533")})
-a = post.find({'name': {'$lt': 'tobetree'}})
+a = post.find({'password': {'$lt': 6}}).sort('password')
 c = post.find_one({'profie': 'github.com/tobetree'})
 print(c)
 # print(len(a))
@@ -37,5 +37,6 @@ i = 0
 for b in a:
     i += 1
     print(b)
+    print(b['_id'])
 a.close()
 print(i)
