@@ -12,6 +12,11 @@ client = MongoClient('localhost', 27017)
 # 得到数据库实例
 # 就算数据库不存在也不要紧，只要你插入数据就会自动创建
 db = client.test_database
+# 先要启动数据库和客户端
+#cd /Users/wangpegnfei/Desktop/mongodb-osx-x86_64-2.4.6/bin
+#./mongoexport -d 数据库名 -c 表名 --csv -f 要导出的字段名，每个字段名以逗号隔开 -o 具体地址(如果不加具体地址，则默认为导出到bin目录下)/要导出的文件名.csv deprecated
+#./mongoexport -d 数据库名 -c 表名 --type=csv -f 要导出的字段名，每个字段名以逗号隔开 -o 具体地址(如果不加具体地址，则默认为导出到bin目录下)/要导出的文件名.csv
+#mongoexport -d douban -c movie_250 --csv -f title,url,rating_num -o E://douban.csv
 print(db)
 print(client.database_names())
 data = {
